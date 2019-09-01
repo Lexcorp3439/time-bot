@@ -5,6 +5,7 @@ import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 
 import com.handtruth.bot.time.entities.Dtask;
+import com.handtruth.bot.time.entities.Users;
 
 public class HibernateSessionFactoryUtil {
     private static SessionFactory sessionFactory;
@@ -16,11 +17,12 @@ public class HibernateSessionFactoryUtil {
             try {
                 Configuration configuration = new Configuration().configure();
                 configuration.addAnnotatedClass(Dtask.class);
+                configuration.addAnnotatedClass(Users.class);
                 StandardServiceRegistryBuilder builder = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties());
                 sessionFactory = configuration.buildSessionFactory(builder.build());
 
             } catch (Exception e) {
-                System.out.println("Исключение!" + e);
+                System.out.println("Исключение! " + e);
             }
         }
         return sessionFactory;
