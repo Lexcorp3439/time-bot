@@ -10,5 +10,8 @@ public interface DtaskDao {
     void save(Dtask dtask);
     void update(Dtask dtask);
     void delete(Dtask dtask);
+    void deleteAll();
     List<Dtask> findAll();
+
+    void deleteByUserId(long id);
 }
