@@ -42,6 +42,7 @@ public class DtaskDaoImpl implements DtaskDao{
         session.close();
     }
 
+    @SuppressWarnings("JpaQlInspection")
     public void deleteAll() {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Query query = session.createQuery("DELETE FROM Users");
@@ -52,7 +53,7 @@ public class DtaskDaoImpl implements DtaskDao{
         session.close();
     }
 
-
+    @SuppressWarnings("JpaQlInspection")
     public void deleteByUserId(long id) {
         Session session = HibernateSessionFactoryUtil.getSessionFactory().openSession();
         Query query = session.createQuery("DELETE FROM Users where id = :user_id ");
@@ -66,7 +67,7 @@ public class DtaskDaoImpl implements DtaskDao{
 //        query.getResultList();
     }
 
-    @SuppressWarnings("unchecked")
+    @SuppressWarnings({"unchecked", "JpaQlInspection"})
     public List<Dtask> findAll() {
         List dtasks = HibernateSessionFactoryUtil.getSessionFactory()
                 .openSession().createQuery("FROM Dtask").list();

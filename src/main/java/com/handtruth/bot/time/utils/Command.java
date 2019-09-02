@@ -10,7 +10,8 @@ public enum Command {
     failedM("/failedM"),
     completeY("/completeY"),
     failedY("/failedY"),
-    statistic("/statistic");
+    statistic("/statistic"),
+    disband("/disband");
 
     private String name;
 

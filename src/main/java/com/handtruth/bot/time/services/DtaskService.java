@@ -16,50 +16,43 @@ public class DtaskService {
     private DtaskService() {
     }
 
-    public static DtaskService getINSTANCE() {
+    public static DtaskService getInstance() {
         return INSTANCE;
     }
 
-    public void updateCountById(User user) {
+    public Dtask find(User user) {
+        Dtask dtask = dtaskDao.findById(user.getId());
+        if (dtask == null) {
+            dtask = addByUser(user);
+        }
+        return dtask;
+    }
+
+    public void update(User user, Dtask dtaskK) {
         Dtask dtask = dtaskDao.findById(user.getId());
         if (dtask == null) {
             addByUser(user);
-        } else {
-            int count = dtask.getCount();
-            if (count != 5) {
-                dtask.setCount(++count);
-            }
-            dtaskDao.update(dtask);
+        }
+        dtask.setMask(dtaskK);
+        dtaskDao.update(dtask);
+    }
+
+    public void clearAll() {
+        List<Dtask> dtasks = dtaskDao.findAll();
+        for (Dtask d: dtasks) {
+            d.clear();
+            dtaskDao.update(d);
         }
     }
 
-    public void clearCountById(User user) {
-        Dtask dtask = dtaskDao.findById(user.getId());
-        if (dtask == null) {
-            addByUser(user);
-        } else {
-            dtask.setCount(0);
-            dtaskDao.update(dtask);
-        }
-    }
-
-    private void addByUser(User user) {
-        Dtask dtask = new Dtask(0, new Users(user.getId(), user.getUserName()));
+    private Dtask addByUser(User user) {
+        Dtask dtask = new Dtask(new Users(user.getId(), user.getUserName()));
         dtaskDao.save(dtask);
+        return dtask;
     }
 
     public List<Dtask> all() {
         return dtaskDao.findAll();
-    }
-
-    public int getCountById(User user) {
-        Dtask dtask = dtaskDao.findById(user.getId());
-        if (dtask == null) {
-            addByUser(user);
-            return 0;
-        } else {
-            return dtask.getCount();
-        }
     }
 
     public void createDtask(Dtask dtask) {
